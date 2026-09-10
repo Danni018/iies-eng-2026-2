@@ -1,0 +1,63 @@
+# Descrição Narrativa — Máquina de Troco
+
+A máquina de autoatendimento recebe o preço do produto e o valor pago pelo cliente.
+
+Primeiramente, a máquina verifica se o valor pago é suficiente para comprar o produto. Se o valor pago for menor que o preço, a máquina informa que o valor é insuficiente e encerra o processo.
+
+Se o valor pago for igual ao preço do produto, a máquina informa que não há troco e encerra o processo.
+
+Quando o valor pago for maior que o preço, a máquina calcula o valor do troco, subtraindo o preço do produto do valor pago.
+
+Em seguida, a máquina verifica as cédulas e moedas disponíveis, começando pelo maior valor. Para cada valor disponível, ela calcula quantas unidades podem ser utilizadas no troco e atualiza o valor restante.
+
+A máquina continua esse processo até que todo o troco seja devolvido. Ao final, exibe a quantidade de cada cédula e moeda que deve ser entregue ao cliente e encerra o processo.
+
+  # Fluxograma — Máquina de Troco
+
+```mermaid
+flowchart TD
+    A([Início]) --> B[/Ler preço e valor pago/]
+    B --> C{Valor pago é suficiente?}
+    C -- Não --> D[/Exibir "Valor insuficiente"/]
+    D --> E([Fim])
+    C -- Sim --> F{Valor pago é igual ao preço?}
+    F -- Sim --> G[/Exibir "Sem troco"/]
+    G --> E
+    F -- Não --> H[Calcular troco]
+    H --> I[Percorrer valores das cédulas e moedas em ordem decrescente]
+    I --> J[Calcular quantidade de cada valor]
+    J --> K[/Exibir quantidade de cada cédula/moeda/]
+    K --> E
+
+      # Pseudocódigo — Máquina de Troco
+
+ALGORITMO maquina_de_troco
+
+    LEIA preco, pago
+
+    SE pago < preco ENTÃO
+        ESCREVA "Valor insuficiente"
+    SENÃO
+
+        troco ← pago - preco
+
+        SE troco = 0 ENTÃO
+            ESCREVA "Sem troco"
+        SENÃO
+
+            PARA CADA valor EM [10000, 5000, 2000, 1000, 500, 200, 100, 50, 25, 10, 5, 1] FAÇA
+
+                quantidade ← troco DIV valor
+                troco ← troco MOD valor
+
+                SE quantidade > 0 ENTÃO
+                    ESCREVA quantidade, " unidade(s) de R$", valor / 100
+                FIM SE
+
+            FIM PARA
+
+        FIM SE
+
+    FIM SE
+
+FIM ALGORITMO
